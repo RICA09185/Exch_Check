@@ -258,10 +258,17 @@ function calculatePercentDiff(current, average) {
 }
 
 function getJudgement(percentDiff) {
+  let message = "현재는 1년 평균과 비슷한 수준입니다.";
+  if (percentDiff > 0) {
+    message = `현재는 1년 평균보다 +${percentDiff.toFixed(2)}% 높습니다.`;
+  } else if (percentDiff < 0) {
+    message = `현재는 1년 평균보다 ${percentDiff.toFixed(2)}% 낮습니다.`;
+  }
+
   if (percentDiff <= -3) {
     return {
       label: "저렴한 편",
-      message: "최근 1년 평균보다 저렴한 편입니다.",
+      message: message,
       type: "positive"
     };
   }
@@ -269,16 +276,9 @@ function getJudgement(percentDiff) {
   if (percentDiff >= 3) {
     return {
       label: "비싼 편",
-      message: "최근 1년 평균보다 비싼 편입니다.",
+      message: message,
       type: "negative"
     };
-  }
-
-  let message = "최근 1년 평균과 비슷한 수준입니다.";
-  if (percentDiff > 0) {
-    message = `최근 1년 평균보다 +${percentDiff.toFixed(2)}% 높습니다.`;
-  } else if (percentDiff < 0) {
-    message = `최근 1년 평균보다 ${percentDiff.toFixed(2)}% 낮습니다.`;
   }
 
   return {
